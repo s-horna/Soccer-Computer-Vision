@@ -1,0 +1,23 @@
+1. use roboflow dataset to train yolo model (training folder)
+2. use supervision (tracker) and ultralytics (yolo model) to track players
+3. draw players and ball
+4. use sklearn kmeans on every player cutout (bbox) to get jersey pixels and get foreground cluster center, then use kmeans again to separate team colors (fit the model from first frame players then predict w that model)
+    - probably exclude goalkeepers then get field positions of teams and use kmeans to check what side teams are on and what goalkeepers are which
+5. interpolate ball positions using pandas dataframe
+6. check player possession by checking which feet (bottom of bbox) are closest to ball (with max distance for when ball is not in possession) (add 1 second minimum to make sure player has possession)
+7. using cv2.goodFeaturestoTrack and cv2.calcOpticalFlowPyrLK track the camera movement
+8. adjust players positions by subtracting camera movement to x and y coordinates
+9. he transforms the perspectives by using hard coded points (find another way)
+10. calculate speed/distance through pixels
+
+second vid:
+1. same training using roboflow
+2. draws video using supervision instead of cv2
+3. tracks with sv.ByteTrack too
+4. for team classification:
+- preprocess player crops with siglip
+- run umap to get 3dim
+- run kmeans on 3dim
+5. goalkeepers are assigned using mean centroid of teams
+6. Use yolov8x-pose model to fit pitch corners/points
+7. use cv2.findHomography using the points
